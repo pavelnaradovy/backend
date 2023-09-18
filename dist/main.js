@@ -197,7 +197,7 @@ const core_1 = __webpack_require__(4);
 const app_module_1 = __webpack_require__(5);
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
-    await app.listen(3000);
+    await app.listen(5000);
     if (true) {
         module.hot.accept();
         module.hot.dispose(() => app.close());
@@ -332,22 +332,39 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CatsController = void 0;
 const common_1 = __webpack_require__(6);
 let CatsController = class CatsController {
+    create() {
+        return 'This action adds a new cat';
+    }
     findAll() {
-        return ["This action returns all cats", "123", "0333"];
+        return [{ id: 1, name: "Lusy", age: 2 }, { id: 1, name: "Linde", age: 9 }];
+    }
+    findById() {
+        return [{ id: 1, name: "Lusy", age: 2 }];
     }
 };
 exports.CatsController = CatsController;
 __decorate([
+    (0, common_1.Post)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", String)
+], CatsController.prototype, "create", null);
+__decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", typeof (_a = typeof Array !== "undefined" && Array) === "function" ? _a : Object)
+    __metadata("design:returntype", void 0)
 ], CatsController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)(":id"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], CatsController.prototype, "findById", null);
 exports.CatsController = CatsController = __decorate([
     (0, common_1.Controller)('cats')
 ], CatsController);
@@ -415,7 +432,7 @@ exports.CatsController = CatsController = __decorate([
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("a05d4b1c2bdbab4b2449")
+/******/ 		__webpack_require__.h = () => ("2921a56bfaeb145a203e")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
