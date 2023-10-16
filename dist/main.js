@@ -439,8 +439,8 @@ let AuthService = class AuthService {
         this.usersService = usersService;
         this.jwtService = jwtService;
     }
-    async validateUser(username, pass) {
-        const user = await this.usersService.findOne(username);
+    async validateUser(email, pass) {
+        const user = await this.usersService.findOne(email);
         if (user && user.password === pass) {
             const { password, ...result } = user;
             return result;
@@ -448,7 +448,7 @@ let AuthService = class AuthService {
         return null;
     }
     async login(user) {
-        const payload = { username: user.username, sub: user.id };
+        const payload = { username: user.email, sub: user.id };
         return {
             access_token: this.jwtService.sign(payload)
         };
@@ -480,14 +480,14 @@ let UsersService = class UsersService {
     constructor() {
         this.users = [
             {
-                userId: 1, username: "Misha", password: "qwerty123"
+                userId: 1, email: "Misha", password: "qwerty123"
             }, {
-                userId: 2, username: "PvlMrzc", password: "qwerty123"
+                userId: 2, email: "PvlMrzc", password: "qwerty123"
             },
         ];
     }
-    async findOne(username) {
-        return this.users.find(user => user.username === username);
+    async findOne(email) {
+        return this.users.find(user => user.email === email);
     }
 };
 exports.UsersService = UsersService;
@@ -589,8 +589,8 @@ let LocalStrategy = class LocalStrategy extends (0, passport_1.PassportStrategy)
         super();
         this.authService = authService;
     }
-    async validate(username, password) {
-        const user = await this.authService.validateUser(username, password);
+    async validate(email, password) {
+        const user = await this.authService.validateUser(email, password);
         if (!user) {
             throw new common_1.UnauthorizedException();
         }
@@ -629,13 +629,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var _a;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AuthController = void 0;
 const common_1 = __webpack_require__(6);
 const local_auth_guard_1 = __webpack_require__(20);
+const auth_service_1 = __webpack_require__(11);
 let AuthController = class AuthController {
+    constructor(authService) {
+        this.authService = authService;
+    }
     async login(req) {
-        return req.user;
+        console.log("123213123123", req);
+        return this.authService.login(req.user);
     }
 };
 exports.AuthController = AuthController;
@@ -648,7 +654,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
 exports.AuthController = AuthController = __decorate([
-    (0, common_1.Controller)('auth')
+    (0, common_1.Controller)('auth'),
+    __metadata("design:paramtypes", [typeof (_a = typeof auth_service_1.AuthService !== "undefined" && auth_service_1.AuthService) === "function" ? _a : Object])
 ], AuthController);
 
 
@@ -751,7 +758,7 @@ exports.jwtConstants = {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("12f47a673e8157aaaa06")
+/******/ 		__webpack_require__.h = () => ("5732c2970f70d33e9ea0")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
