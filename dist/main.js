@@ -610,7 +610,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AuthController = void 0;
 const common_1 = __webpack_require__(6);
-const passport_1 = __webpack_require__(15);
+const local_auth_guard_1 = __webpack_require__(19);
 let AuthController = class AuthController {
     async login(req) {
         return req.user;
@@ -618,7 +618,7 @@ let AuthController = class AuthController {
 };
 exports.AuthController = AuthController;
 __decorate([
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('local')),
+    (0, common_1.UseGuards)(local_auth_guard_1.LocalAuthGuard),
     (0, common_1.Post)('/login'),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
@@ -628,6 +628,30 @@ __decorate([
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth')
 ], AuthController);
+
+
+/***/ }),
+/* 19 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.LocalAuthGuard = void 0;
+const common_1 = __webpack_require__(6);
+const passport_1 = __webpack_require__(15);
+let LocalAuthGuard = class LocalAuthGuard extends (0, passport_1.AuthGuard)("local") {
+};
+exports.LocalAuthGuard = LocalAuthGuard;
+exports.LocalAuthGuard = LocalAuthGuard = __decorate([
+    (0, common_1.Injectable)()
+], LocalAuthGuard);
 
 
 /***/ })
@@ -692,7 +716,7 @@ exports.AuthController = AuthController = __decorate([
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("17eb2d9b454608f4d37e")
+/******/ 		__webpack_require__.h = () => ("1c7a3cb980d6e9e7a969")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
