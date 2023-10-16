@@ -232,8 +232,8 @@ const app_controller_1 = __webpack_require__(7);
 const app_service_1 = __webpack_require__(8);
 const cats_controller_1 = __webpack_require__(9);
 const auth_module_1 = __webpack_require__(10);
-const users_module_1 = __webpack_require__(13);
-const auth_controller_1 = __webpack_require__(18);
+const users_module_1 = __webpack_require__(14);
+const auth_controller_1 = __webpack_require__(19);
 const auth_service_1 = __webpack_require__(11);
 let AppModule = class AppModule {
 };
@@ -242,7 +242,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [auth_module_1.AuthModule, users_module_1.UsersModule, auth_module_1.AuthModule],
         controllers: [app_controller_1.AppController, cats_controller_1.CatsController, auth_controller_1.AuthController],
-        providers: [app_service_1.AppService, auth_service_1.AuthService],
+        providers: [app_service_1.AppService, auth_service_1.AuthService,],
     })
 ], AppModule);
 
@@ -390,18 +390,25 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AuthModule = void 0;
 const common_1 = __webpack_require__(6);
 const auth_service_1 = __webpack_require__(11);
-const users_module_1 = __webpack_require__(13);
-const passport_1 = __webpack_require__(15);
-const local_strategy_1 = __webpack_require__(16);
-const auth_controller_1 = __webpack_require__(18);
+const users_module_1 = __webpack_require__(14);
+const passport_1 = __webpack_require__(16);
+const local_strategy_1 = __webpack_require__(17);
+const auth_controller_1 = __webpack_require__(19);
+const jwt_1 = __webpack_require__(13);
+const constants_1 = __webpack_require__(21);
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
-        providers: [auth_service_1.AuthService, local_strategy_1.LocalStrategy],
-        imports: [users_module_1.UsersModule, passport_1.PassportModule],
-        controllers: [auth_controller_1.AuthController]
+        providers: [auth_service_1.AuthService, local_strategy_1.LocalStrategy,],
+        imports: [users_module_1.UsersModule, passport_1.PassportModule, jwt_1.JwtModule.register({
+                secret: constants_1.jwtConstants.secret,
+                signOptions: { expiresIn: '60s' },
+            }),
+        ],
+        controllers: [auth_controller_1.AuthController],
+        exports: [auth_service_1.AuthService, jwt_1.JwtModule],
     })
 ], AuthModule);
 
@@ -421,14 +428,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a;
+var _a, _b;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AuthService = void 0;
 const common_1 = __webpack_require__(6);
 const users_service_1 = __webpack_require__(12);
+const jwt_1 = __webpack_require__(13);
 let AuthService = class AuthService {
-    constructor(usersService) {
+    constructor(usersService, jwtService) {
         this.usersService = usersService;
+        this.jwtService = jwtService;
     }
     async validateUser(username, pass) {
         const user = await this.usersService.findOne(username);
@@ -438,11 +447,17 @@ let AuthService = class AuthService {
         }
         return null;
     }
+    async login(user) {
+        const payload = { username: user.username, sub: user.id };
+        return {
+            access_token: this.jwtService.sign(payload)
+        };
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [typeof (_a = typeof users_service_1.UsersService !== "undefined" && users_service_1.UsersService) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof users_service_1.UsersService !== "undefined" && users_service_1.UsersService) === "function" ? _a : Object, typeof (_b = typeof jwt_1.JwtService !== "undefined" && jwt_1.JwtService) === "function" ? _b : Object])
 ], AuthService);
 
 
@@ -483,6 +498,13 @@ exports.UsersService = UsersService = __decorate([
 
 /***/ }),
 /* 13 */
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("@nestjs/jwt");
+
+/***/ }),
+/* 14 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -497,7 +519,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UsersModule = void 0;
 const common_1 = __webpack_require__(6);
 const users_service_1 = __webpack_require__(12);
-const users_controller_1 = __webpack_require__(14);
+const users_controller_1 = __webpack_require__(15);
 let UsersModule = class UsersModule {
 };
 exports.UsersModule = UsersModule;
@@ -511,7 +533,7 @@ exports.UsersModule = UsersModule = __decorate([
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -534,14 +556,14 @@ exports.UsersController = UsersController = __decorate([
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ ((module) => {
 
 "use strict";
 module.exports = require("@nestjs/passport");
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -558,8 +580,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var _a;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.LocalStrategy = void 0;
-const passport_local_1 = __webpack_require__(17);
-const passport_1 = __webpack_require__(15);
+const passport_local_1 = __webpack_require__(18);
+const passport_1 = __webpack_require__(16);
 const common_1 = __webpack_require__(6);
 const auth_service_1 = __webpack_require__(11);
 let LocalStrategy = class LocalStrategy extends (0, passport_1.PassportStrategy)(passport_local_1.Strategy) {
@@ -583,14 +605,14 @@ exports.LocalStrategy = LocalStrategy = __decorate([
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ ((module) => {
 
 "use strict";
 module.exports = require("passport-local");
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -610,7 +632,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AuthController = void 0;
 const common_1 = __webpack_require__(6);
-const local_auth_guard_1 = __webpack_require__(19);
+const local_auth_guard_1 = __webpack_require__(20);
 let AuthController = class AuthController {
     async login(req) {
         return req.user;
@@ -631,7 +653,7 @@ exports.AuthController = AuthController = __decorate([
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -645,13 +667,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.LocalAuthGuard = void 0;
 const common_1 = __webpack_require__(6);
-const passport_1 = __webpack_require__(15);
+const passport_1 = __webpack_require__(16);
 let LocalAuthGuard = class LocalAuthGuard extends (0, passport_1.AuthGuard)("local") {
 };
 exports.LocalAuthGuard = LocalAuthGuard;
 exports.LocalAuthGuard = LocalAuthGuard = __decorate([
     (0, common_1.Injectable)()
 ], LocalAuthGuard);
+
+
+/***/ }),
+/* 21 */
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.jwtConstants = void 0;
+exports.jwtConstants = {
+    secret: 'DO NOT USE THIS VALUE. INSTEAD, CREATE A COMPLEX SECRET AND KEEP IT SAFE OUTSIDE OF THE SOURCE CODE.',
+};
 
 
 /***/ })
@@ -716,7 +751,7 @@ exports.LocalAuthGuard = LocalAuthGuard = __decorate([
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("1c7a3cb980d6e9e7a969")
+/******/ 		__webpack_require__.h = () => ("12f47a673e8157aaaa06")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
