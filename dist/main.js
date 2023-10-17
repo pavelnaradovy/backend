@@ -405,7 +405,7 @@ exports.AuthModule = AuthModule = __decorate([
         providers: [auth_service_1.AuthService, local_strategy_1.LocalStrategy, jwt_strategy_1.JwtStrategy],
         imports: [users_module_1.UsersModule, passport_1.PassportModule, jwt_1.JwtModule.register({
                 secret: constants_1.jwtConstants.secret,
-                signOptions: { expiresIn: '60s' },
+                signOptions: { expiresIn: '600s' },
             }),
         ],
         controllers: [auth_controller_1.AuthController],
@@ -444,12 +444,13 @@ let AuthService = class AuthService {
         const user = await this.usersService.findOne(email);
         if (user && user.password === pass) {
             const { password, ...result } = user;
+            console.log("Result", result);
             return result;
         }
         return null;
     }
     async login(user) {
-        const payload = { username: user.email, sub: user.id };
+        const payload = { username: user.email, sub: user.userId };
         return {
             access_token: this.jwtService.sign(payload)
         };
@@ -659,7 +660,7 @@ __decorate([
 ], AuthController.prototype, "login", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Get)("/profile"),
+    (0, common_1.Get)("profile"),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -762,7 +763,8 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
         });
     }
     async validate(payload) {
-        return { userId: payload.sub, email: payload.email };
+        console.log(payload);
+        return { userId: payload.sub, email: payload.username };
     }
 };
 exports.JwtStrategy = JwtStrategy;
@@ -841,7 +843,7 @@ module.exports = require("passport-jwt");
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("1b1d159732cb46777f29")
+/******/ 		__webpack_require__.h = () => ("dcb823d5eaa18d8aa4fb")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
