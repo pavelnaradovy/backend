@@ -235,13 +235,14 @@ const auth_module_1 = __webpack_require__(10);
 const users_module_1 = __webpack_require__(14);
 const auth_controller_1 = __webpack_require__(19);
 const auth_service_1 = __webpack_require__(11);
+const posts_controller_1 = __webpack_require__(25);
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [auth_module_1.AuthModule, users_module_1.UsersModule, auth_module_1.AuthModule],
-        controllers: [app_controller_1.AppController, cats_controller_1.CatsController, auth_controller_1.AuthController],
+        controllers: [app_controller_1.AppController, cats_controller_1.CatsController, auth_controller_1.AuthController, posts_controller_1.PostsController],
         providers: [app_service_1.AppService, auth_service_1.AuthService,],
     })
 ], AppModule);
@@ -781,6 +782,59 @@ exports.JwtStrategy = JwtStrategy = __decorate([
 "use strict";
 module.exports = require("passport-jwt");
 
+/***/ }),
+/* 25 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PostsController = void 0;
+const common_1 = __webpack_require__(6);
+let PostsController = class PostsController {
+    create() {
+        return 'This action adds a new cat';
+    }
+    findAll() {
+        return [{ id: 1, name: "Lusy", age: 2 }, { id: 1, name: "Linde", age: 9 }];
+    }
+    findById() {
+        return [{ id: 1, name: "Lusy", age: 2 }];
+    }
+};
+exports.PostsController = PostsController;
+__decorate([
+    (0, common_1.Post)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", String)
+], PostsController.prototype, "create", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], PostsController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)(":id"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], PostsController.prototype, "findById", null);
+exports.PostsController = PostsController = __decorate([
+    (0, common_1.Controller)('posts')
+], PostsController);
+
+
 /***/ })
 /******/ 	]);
 /************************************************************************/
@@ -843,7 +897,7 @@ module.exports = require("passport-jwt");
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("dcb823d5eaa18d8aa4fb")
+/******/ 		__webpack_require__.h = () => ("b06498b7fa77b2bf9813")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
