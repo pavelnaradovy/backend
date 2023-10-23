@@ -797,42 +797,107 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var _a, _b, _c;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PostsController = void 0;
 const common_1 = __webpack_require__(6);
+const posts_service_1 = __webpack_require__(26);
+const create_post_dto_1 = __webpack_require__(28);
 let PostsController = class PostsController {
-    create() {
-        return 'This action adds a new cat';
+    constructor(postsService) {
+        this.postsService = postsService;
     }
-    findAll() {
-        return [{ id: 1, name: "Lusy", age: 2 }, { id: 1, name: "Linde", age: 9 }];
+    async create(createPostDto) {
+        this.postsService.create(createPostDto);
     }
-    findById() {
-        return [{ id: 1, name: "Lusy", age: 2 }];
+    async findAll() {
+        return this.postsService.findAll();
     }
 };
 exports.PostsController = PostsController;
 __decorate([
     (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
+    __metadata("design:paramtypes", [typeof (_b = typeof create_post_dto_1.CreatePostDto !== "undefined" && create_post_dto_1.CreatePostDto) === "function" ? _b : Object]),
+    __metadata("design:returntype", Promise)
 ], PostsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", typeof (_c = typeof Promise !== "undefined" && Promise) === "function" ? _c : Object)
 ], PostsController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Get)(":id"),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], PostsController.prototype, "findById", null);
 exports.PostsController = PostsController = __decorate([
-    (0, common_1.Controller)('posts')
+    (0, common_1.Controller)('posts'),
+    __metadata("design:paramtypes", [typeof (_a = typeof posts_service_1.PostService !== "undefined" && posts_service_1.PostService) === "function" ? _a : Object])
 ], PostsController);
+
+
+/***/ }),
+/* 26 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var _a;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PostService = void 0;
+const mongoose_1 = __webpack_require__(27);
+const common_1 = __webpack_require__(6);
+let PostService = class PostService {
+    constructor(postModel) {
+        this.postModel = postModel;
+    }
+    async create(createCatDto) {
+        const createdPost = new this.postModel(createCatDto);
+        return createdPost.save();
+    }
+    async findAll() {
+        return this.postModel.find().exec();
+    }
+};
+exports.PostService = PostService;
+exports.PostService = PostService = __decorate([
+    (0, common_1.Injectable)(),
+    __param(0, (0, common_1.Inject)('CAT_MODEL')),
+    __metadata("design:paramtypes", [typeof (_a = typeof mongoose_1.Model !== "undefined" && mongoose_1.Model) === "function" ? _a : Object])
+], PostService);
+
+
+/***/ }),
+/* 27 */
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("mongoose");
+
+/***/ }),
+/* 28 */
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CreatePostDto = void 0;
+class CreatePostDto {
+}
+exports.CreatePostDto = CreatePostDto;
 
 
 /***/ })
@@ -897,7 +962,7 @@ exports.PostsController = PostsController = __decorate([
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("b06498b7fa77b2bf9813")
+/******/ 		__webpack_require__.h = () => ("9f1ceeb3108a042f71b8")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */

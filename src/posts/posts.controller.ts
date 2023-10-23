@@ -1,20 +1,19 @@
-import { Controller, Get, Post, } from "@nestjs/common";
+import { Body, Controller, Get, Post, } from "@nestjs/common";
+import { PostService } from "./posts.service";
+import { CreatePostDto } from "./create-post.dto";
+import { PostInterface } from "src/interfaces/post.interface";
 
 @Controller('posts')
 export class PostsController {
-    @Post()
-    create(): string {
-        return 'This action adds a new cat';
-    }
+    constructor(private postsService: PostService) { }
 
+    @Post()
+    async create(@Body() createPostDto: CreatePostDto) {
+        this.postsService.create(createPostDto);
+    }
 
     @Get()
-    findAll() {
-        return [{ id: 1, name: "Lusy", age: 2 }, { id: 1, name: "Linde", age: 9 }]
-    }
-    
-    @Get(":id")
-    findById() {
-        return [{ id: 1, name: "Lusy", age: 2 }]
+    async findAll(): Promise<PostInterface[]> {
+        return this.postsService.findAll();
     }
 }
