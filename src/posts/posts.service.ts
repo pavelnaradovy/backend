@@ -4,9 +4,9 @@ import { PostInterface } from 'src/interfaces/post.interface';
 import { CreatePostDto } from './create-post.dto';
 
 @Injectable()
-export class PostService {
+export class PostsService {
     constructor(
-        @Inject('CAT_MODEL')
+        @Inject('POST_MODEL')
         private postModel: Model<PostInterface>,
     ) { }
 

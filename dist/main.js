@@ -797,21 +797,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-var _a, _b, _c;
+var _a, _b;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PostsController = void 0;
 const common_1 = __webpack_require__(6);
 const posts_service_1 = __webpack_require__(26);
-const create_post_dto_1 = __webpack_require__(28);
 let PostsController = class PostsController {
     constructor(postsService) {
         this.postsService = postsService;
-    }
-    async create(createPostDto) {
-        this.postsService.create(createPostDto);
     }
     async findAll() {
         return this.postsService.findAll();
@@ -819,21 +812,14 @@ let PostsController = class PostsController {
 };
 exports.PostsController = PostsController;
 __decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_b = typeof create_post_dto_1.CreatePostDto !== "undefined" && create_post_dto_1.CreatePostDto) === "function" ? _b : Object]),
-    __metadata("design:returntype", Promise)
-], PostsController.prototype, "create", null);
-__decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", typeof (_c = typeof Promise !== "undefined" && Promise) === "function" ? _c : Object)
+    __metadata("design:returntype", typeof (_b = typeof Promise !== "undefined" && Promise) === "function" ? _b : Object)
 ], PostsController.prototype, "findAll", null);
 exports.PostsController = PostsController = __decorate([
     (0, common_1.Controller)('posts'),
-    __metadata("design:paramtypes", [typeof (_a = typeof posts_service_1.PostService !== "undefined" && posts_service_1.PostService) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof posts_service_1.PostsService !== "undefined" && posts_service_1.PostsService) === "function" ? _a : Object])
 ], PostsController);
 
 
@@ -857,10 +843,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 var _a;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PostService = void 0;
+exports.PostsService = void 0;
 const mongoose_1 = __webpack_require__(27);
 const common_1 = __webpack_require__(6);
-let PostService = class PostService {
+let PostsService = class PostsService {
     constructor(postModel) {
         this.postModel = postModel;
     }
@@ -872,12 +858,12 @@ let PostService = class PostService {
         return this.postModel.find().exec();
     }
 };
-exports.PostService = PostService;
-exports.PostService = PostService = __decorate([
+exports.PostsService = PostsService;
+exports.PostsService = PostsService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, common_1.Inject)('CAT_MODEL')),
+    __param(0, (0, common_1.Inject)('POST_MODEL')),
     __metadata("design:paramtypes", [typeof (_a = typeof mongoose_1.Model !== "undefined" && mongoose_1.Model) === "function" ? _a : Object])
-], PostService);
+], PostsService);
 
 
 /***/ }),
@@ -886,19 +872,6 @@ exports.PostService = PostService = __decorate([
 
 "use strict";
 module.exports = require("mongoose");
-
-/***/ }),
-/* 28 */
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.CreatePostDto = void 0;
-class CreatePostDto {
-}
-exports.CreatePostDto = CreatePostDto;
-
 
 /***/ })
 /******/ 	]);
@@ -962,7 +935,7 @@ exports.CreatePostDto = CreatePostDto;
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("9f1ceeb3108a042f71b8")
+/******/ 		__webpack_require__.h = () => ("30a3c2747b0746a70854")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */

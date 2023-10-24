@@ -1,10 +1,7 @@
+import { Document } from 'mongoose';
 
-export interface PostInterface {
-    _id: any;
-    title: string;
-    body: string;
-    category: string;
-    likes: string;
-    tags: any;
-    date: String;
+export interface PostInterface extends Document {
+    readonly name: string;
+    readonly age: number;
+    readonly breed: string;
 }
