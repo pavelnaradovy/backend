@@ -12,8 +12,8 @@ export class PostsController {
     //     this.postsService.create(createPostDto);
     // }
 
-    @Get()
-    async findAll(): Promise<PostInterface[]> {
-        return this.postsService.findAll();
-    }
+    // @Get()
+    // async findAll(): Promise<PostInterface[]> {
+    //     return this.postsService.findAll();
+    // }
 }
